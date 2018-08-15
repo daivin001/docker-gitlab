@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+# 执行引入mysql所需要的包
 apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
       wget ca-certificates apt-transport-https \
@@ -28,3 +30,8 @@ apt-get update \
  && DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales \
  && gem install --no-document bundler \
  && rm -rf /var/lib/apt/lists/*
+
+# 初始化定制化功能的脚本,没有则创建空文件,以免后续步骤执行出错
+if [ ! -f "/etc/gitlab/script.custom.sh" ];then
+  echo "#!/bin/bash" >> /etc/gitlab/script.custom.sh
+fi
